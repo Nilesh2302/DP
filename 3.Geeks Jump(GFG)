@@ -1,0 +1,87 @@
+approch 1 : recusrsion   t.c. is O(2^N) and s.c O(n) i.e,, stack space
+import sys
+class Solution:
+    def f(self,ind,height):
+        if ind == 0:
+            return 0
+        
+        left  = self.f(ind-1, height) + abs(height[ind]-height[ind-1])
+        right = sys.maxsize
+        if ind>1:
+            right = self.f(ind-2, height) + abs(height[ind]-height[ind-2])
+        
+        return min(left,right)
+    def minimumEnergy(self, height, n):
+        # Code here
+        
+        return self.f(n-1,height)
+        
+        
+approch 2 : memoization t.c is O(N) and s.c is O((n)+(n)) .. stack space and array space
+import sys
+class Solution:
+    def f(self,ind,height,dp):
+        if ind == 0:
+            return 0
+        
+        if dp[ind]!=-1:
+            return dp[ind]
+        
+        left  = self.f(ind-1, height,dp) + abs(height[ind]-height[ind-1])
+        right = sys.maxsize
+        if ind>1:
+            right = self.f(ind-2, height,dp) + abs(height[ind]-height[ind-2])
+        
+        dp[ind] = min(left,right)
+        return dp[ind]
+    def minimumEnergy(self, height, n):
+        # Code here
+        dp = [-1]*(n)
+        return self.f(n-1,height,dp)
+        
+  
+ approch 3 : tabulation t.c. is O(N) and s.c is O(n) ... stack space is removed only the array space is there
+ import sys
+class Solution:
+    def f(self,n,height,dp):
+        dp[0] = 0
+        for ind in range(1, n):
+            jumpTwo = sys.maxsize
+            jumpOne = dp[ind-1] + abs(height[ind]-height[ind-1])
+            if ind > 1:
+                jumpTwo = dp[ind-2] + abs(height[ind]-height[ind-2])
+            dp[ind] = min(jumpOne, jumpTwo)
+        return dp[n-1]
+  
+    def minimumEnergy(self, height, n):
+        # Code here
+        dp = [-1]*(n)
+        return self.f(n,height,dp)
+
+
+approch 4 : by optimizing s.c is O(1) and t.c is O(n)
+#User function Template for python3
+import sys
+class Solution:
+    def f(self,n,height):
+        prev = 0
+        prev2 = 0
+        for i in range(1,n):
+            jump2 = sys.maxsize
+            jump1 = prev + abs(height[i] - height[i-1])
+            if i>1:
+                jump2 = prev2  + abs(height[i] - height[i-2])
+            
+            curr = min(jump1,jump2)
+            prev2 = prev
+            prev = curr
+        
+        return prev    
+        
+  
+    def minimumEnergy(self, height, n):
+        # Code here
+        return self.f(n,height)
+
+        
+
