@@ -1,3 +1,4 @@
+#note this is codestudiio problem i gfg last and first element of the array is not adjacent but this code works when they are adjacent.ie,, array keep in circular manner
 t.c. O(n) and s.c (1)
 class Solution:  
     def solve(self,arr):
